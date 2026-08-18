@@ -1,0 +1,50 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        
+        // Always binary search on the smaller array
+        if (nums1.size() > nums2.size()) {
+            swap(nums1, nums2);
+        }
+
+        int m = nums1.size();
+        int n = nums2.size();
+
+        int low = 0;
+        int high = m;
+
+        int half = (m + n + 1) / 2;
+
+        while (low <= high) {
+            int i = low + (high - low) / 2;
+            int j = half - i;
+
+            int left1 = (i == 0) ? INT_MIN : nums1[i - 1];
+            int right1 = (i == m) ? INT_MAX : nums1[i];
+
+            int left2 = (j == 0) ? INT_MIN : nums2[j - 1];
+            int right2 = (j == n) ? INT_MAX : nums2[j];
+
+            // Too many elements taken from nums1
+            if (left1 > right2) {
+                high = i - 1;
+            }
+            
+            // Too few elements taken from nums1
+            else if (left2 > right1) {
+                low = i + 1;
+            }
+            
+            // Correct partition
+            else {
+                if ((m + n) % 2 == 1) {
+                    return max(left1, left2);
+                }
+
+                return (max(left1, left2) + min(right1, right2)) / 2.0;
+            }
+        }
+
+        return 0.0;
+    }
+};
