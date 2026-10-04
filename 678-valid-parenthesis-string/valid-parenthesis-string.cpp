@@ -1,8 +1,7 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        int lo = 0, hi = 0; // range of possible balances
-        
+        int lo = 0, hi = 0;
         for (char c : s) {
             if (c == '(') {
                 lo++;
@@ -10,15 +9,13 @@ public:
             } else if (c == ')') {
                 lo--;
                 hi--;
-            } else { // '*'
-                lo--; // treat as ')'
-                hi++; // treat as '('
+            } else {
+                lo--;
+                hi++;
             }
-            
-            if (hi < 0) return false; // even the best case went negative -> unrecoverable
-            lo = max(lo, 0); // can't have negative balance; clamp to 0 (treat '*' as empty/'(' instead of ')')
+            if (hi < 0) return false;
+            lo = max(lo, 0);
         }
-        
         return lo == 0;
     }
 };
