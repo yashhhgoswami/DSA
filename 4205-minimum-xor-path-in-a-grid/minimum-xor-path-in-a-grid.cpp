@@ -22,6 +22,6 @@ public:
         for (int x = 0; x < 1024; x++) {
             if (reach[m - 1][n - 1][x]) return x;
         }
-        return 0;
+        return -1;
     }
 };
